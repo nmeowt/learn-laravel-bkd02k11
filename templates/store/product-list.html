@@ -12,7 +12,7 @@
                     </div>
                     {% for product in products %}
                     <div class="col-md-4 col-sm-4">
-                        <div class="card-image card-product item">
+                        <div class="card-image card-product item" data-id="{{ product.id }}">
                             <img src="{{ product.image.url }}" alt="Rounded Image" class="img-rounded img-responsive">
                             <div class="details">
                                 <div class="description">
@@ -34,4 +34,5 @@
         </div>
     </div>
 </div>
+{% include "store/modal.html" %}
 {% endblock wrapper %}

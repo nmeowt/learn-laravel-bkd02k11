@@ -1,0 +1,35 @@
+<div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-medium modal-register">
+        <div class="modal-content">
+            <div class="modal-header no-border-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="text-muted">Thêm vào giỏ hàng</h6>
+                <h3 class="modal-title"></h3>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <input id="id-product" type="hidden" value="">
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <select name="huge" class="selectpicker" id="quantity" data-style="form-control border-input"
+                        data-menu-style="">
+                        <option selected value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer no-border-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-fill btn-primary add-to-cart">Thêm sản phẩm</button>
+            </div>
+        </div>
+    </div>
+</div>
