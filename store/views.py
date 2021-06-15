@@ -1,7 +1,9 @@
 from .models import Category, Product
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 
 
+@login_required()
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()

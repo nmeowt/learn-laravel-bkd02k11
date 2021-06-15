@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block wrapper %}
+
+
+
+<div class="main">
+    <div class="section section-nude">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Giỏ hàng</h4>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="table-responsive">
+                        <table class="table table-shopping">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th></th>
+                                    <th class="text-right">Giá</th>
+                                    <th class="text-right">Số lượng</th>
+                                    <th class="text-right">Tổng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% csrf_token %}
+                                {% for item in cart %}
+                                {% with product=item.product %}
+                                <tr class="item" data-id="{{ product.id }}">
+                                    <td>
+                                        <div class="img-container">
+                                            <img src="{{ product.image.url }}" alt="Agenda">
+                                        </div>
+                                    </td>
+                                    <td class="td-product">
+                                        <strong>{{ product.name }}</strong>
+                                    </td>
+
+                                    <td class="td-price">
+                                        {{ product.price_display }}
+                                    </td>
+                                    <td class="td-number td-quantity">
+                                        <span class="quantity">{{item.quantity}}</span>
+
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm decrease"> - </button>
+                                            <button class="btn btn-sm increase"> + </button>
+                                        </div>
+                                    </td>
+                                    <td class="td-number total-price">
+                                        {{item.total_price}}
+                                    </td>
+                                    <td class="td-number">
+                                        <a href="{% url 'cart:cart-remove' product.id %}" class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                                {% endwith %}
+                                {% endfor %}
+                                <tr class="tr-actions">
+                                    <td colspan="4"></td>
+                                    <td colspan="2" class="text-right">
+                                        <button type="button" class="btn btn-danger btn-fill btn-lg">Thanh toán
+                                            <i class="fa fa-chevron-right"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock wrapper %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block wrapper %}
+<div class="wrapper full-screen login">
+    <div class="section section-nude">
+        <div class="background">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
+                        <div class="demo-card">
+                            <h3 class="title">Xin Chào</h3>
+                            <form class="register-form" method="post">
+                                {% csrf_token %}
+                                <label>Tên đăng nhập</label>
+                                <input type="text" name="username" class="form-control" placeholder="tên đăng nhập">
+                                <label>Mật khẩu</label>
+                                <input type="password" name="password" class="form-control" placeholder="mật khẩu">
+                                <button class="btn btn-danger btn-block">Đăng nhập</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock wrapper %}

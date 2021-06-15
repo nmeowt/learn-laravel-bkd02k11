@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^remove/(?P<product_id>\d+)/$',
         views.cart_remove,
         name='cart-remove'),
+    url(r'^total-item$',
+        views.cart_total_items,
+        name='cart-total-item'),
 ]

@@ -5,3 +5,12 @@
 .item:hover div {
     color: #ff9800;
 }
+
+.full-screen .background {
+    position: relative;
+    min-height: 75vh;
+}
+
+.full-screen .background .container {
+    margin-top: 5%;
+}
