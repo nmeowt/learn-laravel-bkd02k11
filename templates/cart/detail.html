@@ -54,7 +54,8 @@
                                         {{item.total_price}}
                                     </td>
                                     <td class="td-number">
-                                        <a href="{% url 'cart:cart-remove' product.id %}" class="btn btn-danger">Xóa</a>
+                                        <!-- <a href="{% url 'cart:cart-remove' product.id %}" class="btn btn-danger">Xóa</a> -->
+                                        <button class="btn btn-danger delete">Xóa</button>
                                     </td>
                                 </tr>
                                 {% endwith %}
@@ -62,8 +63,10 @@
                                 <tr class="tr-actions">
                                     <td colspan="4"></td>
                                     <td colspan="2" class="text-right">
-                                        <button type="button" class="btn btn-danger btn-fill btn-lg">Thanh toán
-                                            <i class="fa fa-chevron-right"></i></button>
+                                        <a href="{% url 'order:create' %}" class="btn btn-danger btn-fill btn-lg"
+                                            id="payment">Thanh
+                                            toán
+                                            <i class="fa fa-chevron-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

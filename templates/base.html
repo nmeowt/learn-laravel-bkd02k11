@@ -39,50 +39,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'store:product_list' %}">Chạn order</a>
+                <a class="navbar-brand" href="{% url 'store:product-list' %}">Chạn order</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navigation-example-2">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{% url 'cart:cart-detail' %}" class="btn btn-danger btn-fill"><i
-                                class="fa fa-shopping-cart"></i>Đơn hàng</a>
+                        <a href="{% url 'cart:cart-detail' %}" class="btn btn-danger btn-fill">
+                            <i class="fa fa-shopping-cart"></i>
+                            ( <span id="cart-total">0</span> )
+                            Sản phẩm
+                        </a>
                     </li>
-                    <!-- <li class="dropdown">
-                        <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
-                            <div class="profile-photo-small">
-                                <img src="{% static 'assets/img/cristina.jpg' %}" alt="Circle Image"
-                                    class="img-circle img-responsive img-no-padding">
-                            </div>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div id="staff-info"></div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
                             <li class="dropdown-header">
-                                Dropdown header
+                                Cá nhân
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="#">Me</a>
                             </li>
                             <li>
                                 <a href="#">Settings and other stuff</a>
                             </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Sign out</a></li>
+                            <li class="divider"></li> -->
+                            <li><a href="{% url 'account:logout' %}">Đăng xuất</a></li>
                             <li class="dropdown-footer">
                                 <ul class="dropdown-footer-menu">
                                     <li>
-                                        <a href="#">Creative Tim</a>
+                                        <a href="#">Chạn</a>
                                     </li>
                                     <li>
-                                        <a href="#">Terms</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Privacy</a>
+                                        <a href="#">Cafe</a>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

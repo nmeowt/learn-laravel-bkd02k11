@@ -12,11 +12,20 @@ $(document).ready(function () {
 
     $(".decrease").click((e) => {
         quantityChange(e)
-    });
+    })
 
     $(".increase").click((e) => {
         quantityChange(e, true)
-    });
+    })
+
+    // CART DELETE
+    $(".delete").click(deleteCart)
+
+    // STAFF INFO 
+    getStaffName()
+
+    // CART 
+    getCartTotal()
 });
 
 const chooseQuantity = (e) => {
@@ -29,6 +38,7 @@ const chooseQuantity = (e) => {
     $("#product-modal").modal('show')
 }
 
+// CART 
 const addToCart = () => {
     const params = {
         id: $("#id-product").val(),
@@ -37,7 +47,32 @@ const addToCart = () => {
     }
 
     const result = xhrRequest("../cart/add", params, "post")
-    if (result) $("#product-modal").modal('hide')
+    if (result) {
+        $("#product-modal").modal('hide')
+        getCartTotal()
+    }
+}
+
+const getCartTotal = () => {
+    const result = xhrRequest("/cart/total-item")
+    if (result.total != 0) {
+        $("#cart-total").html(result.total)
+        $("#payment").removeClass("disabled")
+    }
+    else {
+        $("#payment").addClass("disabled")
+    }
+}
+
+const deleteCart = (e) => {
+    const item = $(e.target).closest(".item")[0]
+    const id = $(item).data('id')
+    const url = `/cart/remove/${id}/`
+    const result = xhrRequest(url)
+    if (result) {
+        item.remove()
+        getCartTotal()
+    }
 }
 
 const disabledButton = () => {
@@ -89,7 +124,14 @@ const quantityChange = (e, isIncrease = false) => {
         const totalPriceProduct = parseInt($(price).text()) * quantityValue
         $(totalPrice).html(`${totalPriceProduct}.000₫`)
         disabledButton()
+        getCartTotal()
     }
+}
+// END CART
+
+const getStaffName = () => {
+    const result = xhrRequest("/name")
+    if (result) $("#staff-info").html(result.user)
 }
 
 

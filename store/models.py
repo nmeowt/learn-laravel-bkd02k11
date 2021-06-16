@@ -20,7 +20,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('store:product_list_by_category',
+        return reverse('store:product-list-by-category',
                        args=[self.slug])
 
 
@@ -42,10 +42,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('store:product_detail',
-                       args=[self.id, self.slug])
 
     @property
     def price_display(self):

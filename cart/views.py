@@ -3,11 +3,13 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from store.models import Product
 from .cart import Cart
 
 
+@login_required(login_url='/login/')
 @require_POST
 def cart_add(request):
     id_product = request.POST.get('id')
@@ -23,19 +25,24 @@ def cart_add(request):
     })
 
 
+@login_required(login_url='/login/')
 def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
-    return redirect('cart:cart-detail')
+    # return redirect('cart:cart-detail')
+    return JsonResponse({
+        "message": "Đã xóa thành công"
+    })
 
 
+@login_required(login_url='/login/')
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'cart/detail.html', {'cart': cart})
 
 
+@login_required(login_url='/login/')
 def cart_total_items(request):
     cart = Cart(request)
-    print(cart.count())
-    return JsonResponse({'cart': 'sss'})
+    return JsonResponse({'total': cart.count()})

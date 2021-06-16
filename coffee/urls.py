@@ -19,13 +19,14 @@ from django.urls.conf import include
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LoginView
+
 
 urlpatterns = [
+    path('', include('account.urls')),
     path('admin/', admin.site.urls),
     path('store/', include('store.urls')),
     path('cart/', include('cart.urls')),
-    path('login/', LoginView.as_view(template_name='admin/login.html'))
+    path('order/', include('order.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
