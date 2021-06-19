@@ -30,7 +30,7 @@ $(document).ready(function () {
     // ORDER 
     $("#payment").click(createOrder)
     $("#received").change(moneyReturn)
-    $(".money").keyup(formatCurrency);
+    $(".money").keyup(changeCurrency);
 });
 
 const moneyReturn = (e) => {
@@ -42,9 +42,14 @@ const moneyReturn = (e) => {
 
 }
 
-const formatCurrency = (e) => {
+const changeCurrency = (e) => {
     let $input = $(e.target),
         number = $input.val()
+    let array = formatCurrency(number)
+    $input.val(array[0] + array[1])
+}
+
+const formatCurrency = (number) => {
     number += ''
     number = number.replace(".", "")
     x = number.split('.')
@@ -54,7 +59,7 @@ const formatCurrency = (e) => {
     while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + '.' + '$2')
     }
-    $input.val(x1 + x2)
+    return [x1, x2]
 }
 
 const chooseQuantity = (e) => {
@@ -171,11 +176,40 @@ const createOrder = (e) => {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         }
         const result = xhrRequest(url, data, "post")
-        console.log(result)
+        createInvoice(result)
     }
 }
 
 const createInvoice = (result) => {
+    $(document.body).html(getInvoiceText(result))
+    window.print()
+    window.location = '/store/'
+}
+
+const getInvoiceText = (result) => {
+    let data = '',
+        total = 0
+    result.forEach((item) => {
+        data += `
+        <tr class="service">
+            <td class="tableitem">
+                <p class="itemtext">
+                ${item.product.name}
+                ${item.product.price + '.000'}
+                </p>
+            </td>
+            <td class="tableitem">
+                <p class="itemtext">${item.quantity}</p>
+            </td>
+            <td class="tableitem">
+                <p class="itemtext right">${item.price + '.000'}</p>
+            </td>
+        </tr>
+    `
+        total += item.price * item.quantity
+    })
+    total += ".000"
+    let array = formatCurrency(total)
     const invoice = `
         <div id="invoice-POS">
             <h2 id="top">Chạn Cà Phê</h2>
@@ -183,8 +217,8 @@ const createInvoice = (result) => {
                 <div class="info">
                     <h4>Hóa đơn bán hàng</h4>
                     <p>
-                        Mã : 0193873762</br>
-                        Người bán : Chang</br>
+                        Mã: ${result[0].order.code}</br>
+                        Người bán: ${result[0].order.staff.first_name}</br>
                     </p>
                 </div>
             </div>
@@ -202,68 +236,14 @@ const createInvoice = (result) => {
                                 <h2>Thành tiền</h2>
                             </td>
                         </tr>
-                        <tr class="service">
-                            <td class="tableitem">
-                                <p class="itemtext">Communication</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">5</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">$375.00</p>
-                            </td>
-                        </tr>
-                        <tr class="service">
-                            <td class="tableitem">
-                                <p class="itemtext">Asset Gathering</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">3</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">$225.00</p>
-                            </td>
-                        </tr>
-                        <tr class="service">
-                            <td class="tableitem">
-                                <p class="itemtext">Design Development</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">5</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">$375.00</p>
-                            </td>
-                        </tr>
-                        <tr class="service">
-                            <td class="tableitem">
-                                <p class="itemtext">Animation</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">20</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">$1500.00</p>
-                            </td>
-                        </tr>
-                        <tr class="service">
-                            <td class="tableitem">
-                                <p class="itemtext">Animation Revisions</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">10</p>
-                            </td>
-                            <td class="tableitem">
-                                <p class="itemtext">$750.00</p>
-                            </td>
-                        </tr>
-                        <tr class="tabletitle">
+                        ${data}
+                        <tr class="tabletitle right">
                             <td></td>
                             <td class="Rate">
                                 <h2>Tổng:</h2>
                             </td>
                             <td class="payment">
-                                <h2>$3,644.25</h2>
+                                <h2>${array[0] + array[1]}</h2>
                             </td>
                         </tr>
                     </table>
@@ -276,7 +256,8 @@ const createInvoice = (result) => {
             </div>
             <!--End InvoiceBot-->
         </div>
-    `;
+    `
+    return invoice
 }
 
 const validate = (selector) => {

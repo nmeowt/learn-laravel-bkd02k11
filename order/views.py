@@ -28,5 +28,5 @@ def order_create(request, *args, **kwargs):
             order_item.save()
     order_item = OrderItem.objects.filter(order=order)
     serializer = OrderItemSerializer(order_item, many=True)
-    # cart.clear()
+    cart.clear()
     return Response(serializer.data)

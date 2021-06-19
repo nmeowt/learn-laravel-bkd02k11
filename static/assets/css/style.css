@@ -27,9 +27,9 @@
 
 /* INVOICE */
 #invoice-POS {
-    padding: 2mm;
+    padding: 1em;
     margin: 0 auto;
-    width: 44mm;
+    width: 14em;
     background: #FFF;
 }
 
@@ -39,7 +39,7 @@
 }
 
 #invoice-POS h2 {
-    font-size: 0.9em;
+    font-size: 1em;
     text-transform: uppercase;
 }
 
@@ -99,7 +99,7 @@
 }
 
 #invoice-POS .tabletitle {
-    font-size: 0.5em;
+    font-size: 0.8em;
     background: #EEE;
 }
 
@@ -112,9 +112,19 @@
 }
 
 #invoice-POS .itemtext {
-    font-size: 0.5em;
+    font-size: 0.8em;
 }
 
 #invoice-POS #legalcopy {
     margin-top: 5mm;
+}
+
+#invoice-POS .right {
+    text-align: right;
+}
+
+
+@page {
+    size: 7in 9.25in;
+    margin: 27mm 16mm 27mm 16mm;
 }
