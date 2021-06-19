@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("#get-year").html(new Date().getFullYear())
 
-    // MODAL
+    // CHOOSE QUANTITY MODAL 
     $(".item").click(chooseQuantity)
 
     // CART ACTION
@@ -26,7 +26,36 @@ $(document).ready(function () {
 
     // CART 
     getCartTotal()
+
+    // ORDER 
+    $("#payment").click(createOrder)
+    $("#received").change(moneyReturn)
+    $(".money").keyup(formatCurrency);
 });
+
+const moneyReturn = (e) => {
+    let $input = $(e.target),
+        received = parseInt($input.val()),
+        paid = parseInt($("#paid").val()),
+        returns = $("#returns")
+    returns.val(received - paid + ".000");
+
+}
+
+const formatCurrency = (e) => {
+    let $input = $(e.target),
+        number = $input.val()
+    number += ''
+    number = number.replace(".", "")
+    x = number.split('.')
+    x1 = x[0]
+    x2 = x.length > 1 ? '.' + x[1] : ''
+    let rgx = /(\d+)(\d{3})/
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2')
+    }
+    $input.val(x1 + x2)
+}
 
 const chooseQuantity = (e) => {
     e.preventDefault();
@@ -55,24 +84,20 @@ const addToCart = () => {
 
 const getCartTotal = () => {
     const result = xhrRequest("/cart/total-item")
-    if (result.total != 0) {
-        $("#cart-total").html(result.total)
-        $("#payment").removeClass("disabled")
-    }
-    else {
-        $("#payment").addClass("disabled")
-    }
+    $("#cart-total").html(result.total)
+    result.total != 0 ? $("#payment").removeClass("disabled") : $("#payment").addClass("disabled")
 }
 
 const deleteCart = (e) => {
+    e.preventDefault();
     const item = $(e.target).closest(".item")[0]
     const id = $(item).data('id')
     const url = `/cart/remove/${id}/`
     const result = xhrRequest(url)
     if (result) {
         item.remove()
-        getCartTotal()
     }
+    getCartTotal()
 }
 
 const disabledButton = () => {
@@ -132,6 +157,36 @@ const quantityChange = (e, isIncrease = false) => {
 const getStaffName = () => {
     const result = xhrRequest("/name")
     if (result) $("#staff-info").html(result.user)
+}
+
+const createOrder = (e) => {
+    e.preventDefault();
+    console.log("Creating new order...")
+    const paid = $(e.target).closest(".modal-content").find("input[name='paid']")
+    const url = "/order/create/"
+    let data = {}
+    if (validate(paid)) {
+        data = {
+            paid: $(paid).val(),
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        }
+        const result = xhrRequest(url, data, "post")
+        console.log(result)
+    }
+}
+
+const validate = (selector) => {
+    const parent = $(selector).parents('.form-group');
+    const requiredError = `<small><span class="text-danger">Bắt buộc điền</span></small>`
+    if ($(selector).val() == '') {
+        parent.addClass("has-error")
+        parent.append(requiredError)
+        return false;
+    } else {
+        parent.removeClass("has-error")
+        parent.children('small').last().remove();
+        return true;
+    }
 }
 
 

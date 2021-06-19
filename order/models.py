@@ -8,9 +8,9 @@ class Order(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    code = models.CharField(max_length=20)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    paid = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-created',)
@@ -36,3 +36,7 @@ class OrderItem(models.Model):
     @property
     def get_cost(self):
         return self.price * self.quantity
+
+    @property
+    def price_display(self):
+        return f'{self.price:.3f}₫'

@@ -39,7 +39,9 @@ def cart_remove(request, product_id):
 @login_required(login_url='/login/')
 def cart_detail(request):
     cart = Cart(request)
-    return render(request, 'cart/detail.html', {'cart': cart})
+    return render(request, 'cart/detail.html', {
+        'cart': cart,
+    })
 
 
 @login_required(login_url='/login/')
