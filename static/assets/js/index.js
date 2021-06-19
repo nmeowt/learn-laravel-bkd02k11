@@ -175,6 +175,110 @@ const createOrder = (e) => {
     }
 }
 
+const createInvoice = (result) => {
+    const invoice = `
+        <div id="invoice-POS">
+            <h2 id="top">Chạn Cà Phê</h2>
+            <div id="mid">
+                <div class="info">
+                    <h4>Hóa đơn bán hàng</h4>
+                    <p>
+                        Mã : 0193873762</br>
+                        Người bán : Chang</br>
+                    </p>
+                </div>
+            </div>
+            <div id="bot">
+                <div id="table">
+                    <table>
+                        <tr class="tabletitle">
+                            <td class="item">
+                                <h2>Đơn giá</h2>
+                            </td>
+                            <td class="Hours">
+                                <h2>SL</h2>
+                            </td>
+                            <td class="Rate">
+                                <h2>Thành tiền</h2>
+                            </td>
+                        </tr>
+                        <tr class="service">
+                            <td class="tableitem">
+                                <p class="itemtext">Communication</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">5</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">$375.00</p>
+                            </td>
+                        </tr>
+                        <tr class="service">
+                            <td class="tableitem">
+                                <p class="itemtext">Asset Gathering</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">3</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">$225.00</p>
+                            </td>
+                        </tr>
+                        <tr class="service">
+                            <td class="tableitem">
+                                <p class="itemtext">Design Development</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">5</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">$375.00</p>
+                            </td>
+                        </tr>
+                        <tr class="service">
+                            <td class="tableitem">
+                                <p class="itemtext">Animation</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">20</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">$1500.00</p>
+                            </td>
+                        </tr>
+                        <tr class="service">
+                            <td class="tableitem">
+                                <p class="itemtext">Animation Revisions</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">10</p>
+                            </td>
+                            <td class="tableitem">
+                                <p class="itemtext">$750.00</p>
+                            </td>
+                        </tr>
+                        <tr class="tabletitle">
+                            <td></td>
+                            <td class="Rate">
+                                <h2>Tổng:</h2>
+                            </td>
+                            <td class="payment">
+                                <h2>$3,644.25</h2>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="legalcopy">
+                    <p class="legal">Chạn cảm ơn bạn thật nhiều!</p>
+                </div>
+
+            </div>
+            <!--End InvoiceBot-->
+        </div>
+    `;
+}
+
 const validate = (selector) => {
     const parent = $(selector).parents('.form-group');
     const requiredError = `<small><span class="text-danger">Bắt buộc điền</span></small>`

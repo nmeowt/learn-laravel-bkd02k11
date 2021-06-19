@@ -1,5 +1,5 @@
 from django.http.response import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 
