@@ -8,7 +8,7 @@ app_name = 'account'
 
 urlpatterns = [
     url(r'login',
-        LoginView.as_view(template_name='admin/login.html'),
+        LoginView.as_view(template_name='account/login.html'),
         name='login'
         ),
     url(r'^logout$',
