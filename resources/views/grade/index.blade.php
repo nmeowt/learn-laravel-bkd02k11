@@ -15,6 +15,7 @@
         <tr>
             <th>Mã</th>
             <th>Tên</th>
+            <th></th>
         </tr>
         @foreach ($listGrade as $grade)
             <tr>
