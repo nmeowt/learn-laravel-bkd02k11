@@ -12,11 +12,14 @@ class GradeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listGrade = Grade::paginate(2); # ORM để lấy tất cả bản ghi từ database
+        $search = $request->get('search');
+        // select * .... where name like '%abc%'
+        $listGrade = Grade::where('nameGrade', 'like', "%$search%")->paginate(3); # ORM để lấy tất cả bản ghi từ database
         return view('grade.index', [
             'listGrade' => $listGrade,
+            'search' => $search,
         ]);
     }
 
@@ -53,7 +56,8 @@ class GradeController extends Controller
      */
     public function show($id)
     {
-        //
+        $grade = Grade::where('idGrade', $id)->first();
+        return $grade;
     }
 
     /**
@@ -87,6 +91,7 @@ class GradeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Grade::where('idGrade', $id)->delete();
+        return redirect(route('grade.index'));
     }
 }
