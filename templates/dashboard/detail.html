@@ -1,0 +1,114 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrahead %}
+<script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
+<style>
+    /* Charts Style  */
+
+    .fm-charts-color-1 {
+        fill: #ffa600 !important;
+    }
+
+    .fm-charts-color-2 {
+        fill: #7eae26 !important;
+    }
+
+    .fm-charts-color-3 {
+        fill: #00a45a !important;
+    }
+
+    .fm-charts-color-4 {
+        fill: #df3800 !important;
+    }
+
+    .fm-charts-color-5 {
+        fill: #e95800 !important;
+    }
+
+    .fm-charts-color-6 {
+        fill: #ffa600 !important;
+    }
+</style>
+{% endblock extrahead %}
+
+{% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+    &rsaquo;
+    Bảng điều khiển
+</div>
+{% endblock %}
+{% endif %}
+
+{% block content %}
+<div id="dashboard-container" data-url="{% url 'dashboard:coffee_data' %}">
+    <div id="dashboard-table-container"></div>
+
+</div>
+<script>
+    function processData(dataset) {
+        var result = []
+        dataset.forEach(item => result.push(item.fields));
+        console.log(dataset)
+        return result;
+    }
+    $.ajax({
+        url: $("#dashboard-container").attr("data-url"),
+        dataType: 'json',
+        success: function (data) {
+            new Flexmonster({
+                container: "#dashboard-table-container",
+                componentFolder: "https://cdn.flexmonster.com/",
+                width: "100%",
+                height: 430,
+                toolbar: true,
+                report: {
+                    dataSource: {
+                        type: "json",
+                        data: processData(data),
+                        mapping: {
+                            "order": {
+                                "caption": "Hóa đơn"
+                            },
+                            "product": {
+                                "caption": "Sản phẩm"
+                            },
+                            "price": {
+                                "caption": "Giá",
+                                "type": "number"
+                            },
+                            "quantity": {
+                                "caption": "Số lượng",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "slice": {
+                        "rows": [{
+                            "uniqueName": "order"
+                        }],
+                        "columns": [{
+                            "uniqueName": "product"
+                        }
+                        ],
+                        "measures": [{
+                            "uniqueName": "price",
+                            "aggregation": "sum"
+                        },
+                        {
+                            "uniqueName": "quantity",
+                            "aggregation": "sum"
+                        }
+                        ]
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
