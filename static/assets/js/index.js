@@ -176,7 +176,8 @@ const createOrder = (e) => {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         }
         const result = xhrRequest(url, data, "post")
-        createInvoice(result)
+        console.log(result)
+        // createInvoice(result)
     }
 }
 
