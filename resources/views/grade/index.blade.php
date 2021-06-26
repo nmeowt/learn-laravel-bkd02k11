@@ -27,6 +27,7 @@
                 <td>{{ $grade->idGrade }}</td>
                 <td>{{ $grade->nameGrade }}</td>
                 <td><a href="{{ route('grade.show', $grade->idGrade) }}">Xem</a></td>
+                <td><a href="{{ route('grade.edit', $grade->idGrade) }}">Sửa</a></td>
                 <td>
                     <form action="{{ route('grade.destroy', $grade->idGrade) }}" method="post">
                         @csrf

@@ -56,7 +56,8 @@ class GradeController extends Controller
      */
     public function show($id)
     {
-        $grade = Grade::where('idGrade', $id)->first();
+        // $grade = Grade::where('idGrade', $id)->first(); 
+        $grade = Grade::find($id);
         return $grade;
     }
 
@@ -68,7 +69,10 @@ class GradeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $grade = Grade::find($id);
+        return view('grade.edit', [
+            "grade" => $grade
+        ]);
     }
 
     /**
@@ -80,7 +84,11 @@ class GradeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->get('name-grade');
+        $grade = Grade::find($id);
+        $grade->nameGrade = $name;
+        $grade->save();
+        return redirect()->route('grade.index');
     }
 
     /**
