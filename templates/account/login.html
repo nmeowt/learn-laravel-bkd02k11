@@ -1,0 +1,12 @@
+{% extends 'admin/login.html' %}
+{% load i18n %}
+{% block title %}{{ title }} | {{ site_title|default:_('Chạn quản trị') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Chạn quản trị viên') }}</a>
+</h1>
+{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+{% endblock %}
