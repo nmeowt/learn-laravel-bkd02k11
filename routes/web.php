@@ -13,3 +13,7 @@ Route::get('/student/{name}', [StudentController::class, 'getName']);
 // Route::get("/grade/create", [GradeController::class, 'create']);
 // Route::post("/grade/store", [GradeController::class, 'store'])->name('store');
 Route::resource("grade", GradeController::class);
+
+Route::get('/', function () {
+    return view('dashboard');
+})->name('dashboard');
