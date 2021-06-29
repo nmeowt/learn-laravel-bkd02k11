@@ -59,7 +59,8 @@
                                             </div>
                                         </div>
                                         @if (Session::exists('error'))
-                                            <div class="text-center">{{ Session::get('error') }}</div>
+                                            <div class="text-center text-danger">{{ Session::get('error') }}
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="footer text-center">
