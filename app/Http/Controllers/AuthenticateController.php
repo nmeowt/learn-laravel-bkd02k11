@@ -22,10 +22,16 @@ class AuthenticateController extends Controller
         // Ngoại lệ => bắt các lỗi của chương trình 
         try {
             $admin = Admin::where('email', $email)->where('password', $password)->firstOrFail();
-            $request->session()->put('admin', $admin->idAdmin);
+            $request->session()->put('id', $admin->idAdmin);
             return Redirect::route('dashboard');
         } catch (Exception $e) {
             return Redirect::route('login')->with('error', 'Sai gòiiiii');
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return Redirect::route('login');
     }
 }
