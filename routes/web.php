@@ -23,6 +23,7 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     // lớp
     Route::resource("grade", GradeController::class);
+
     // sinh viên
     Route::resource("student", StudentController::class);
     Route::prefix("student")->name('student.')->group(function () {
