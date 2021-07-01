@@ -21,6 +21,12 @@
                     <p> Quản lý lớp </p>
                 </a>
             </li>
+            <li class="{{ Request::is('student') ? 'active' : '' }}">
+                <a href=" {{ route('student.index') }}">
+                    <i class="material-icons">assignment</i>
+                    <p> Quản lý sinh viên </p>
+                </a>
+            </li>
             <li>
                 <a href="./charts.html">
                     <i class="material-icons">timeline</i>

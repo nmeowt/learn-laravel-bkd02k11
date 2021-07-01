@@ -1,41 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+@section('title', 'Danh sách sinh viên')
 
-<body>
-    <h1>Cách cũ: <?php echo $abc; ?> <br> Cách mới: {{ $abc }} </h1>
-    <?php
-    $a = 5;
-    echo $a;
-    ?>
-    @php
-        $a = 5;
-        echo $a;
-    @endphp
-    {{-- Vòng lặp foreach --}}
-    {{-- <?php foreach ($iterable as $item):
-        # code...
-    endforeach; ?>
-
-    @foreach ($collection as $item)
-
-    @endforeach
-
-    @for ($i = 0; $i < $count; $i++)
-        
-    @endfor --}}
-
-    @if ($a == 5)
-        <h1>oooooo</h1>
-    @endif
-
-
-</body>
-
-</html>
+@section('content')
+    <div class="card">
+        <div class="card-header card-header-icon" data-background-color="rose">
+            <i class="material-icons">assignment</i>
+        </div>
+        <div class="card-content">
+            <h4 class="card-title">Danh sách sinh viên</h4>
+            <div class="table-responsive">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="">
+                            Chọn lớp
+                            <select name="id-grade">
+                                <option value="">======</option>
+                                @foreach ($listGrade as $grade)
+                                    <option value="{{ $grade->idGrade }}" @if ($grade->idGrade == $idGrade) selected @endif>
+                                        {{ $grade->nameGrade }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button>ok</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="">
+                            <input type="text" value="{{ $search }}" name="search">
+                            <button>Tìm nó</button>
+                        </form>
+                    </div>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Mã</th>
+                        <th>Họ tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>Lớp</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    @foreach ($listStudent as $student)
+                        <tr>
+                            <td>{{ $student->idStudent }}</td>
+                            <td>{{ $student->FullName }}</td>
+                            <td>{{ $student->GenderName }}</td>
+                            <td>{{ $student->birthDate }}</td>
+                            <td>{{ $student->nameGrade }}</td>
+                            <td><a class="btn btn-sm btn-warning"
+                                    href="{{ route('student.edit', $student->idStudent) }}">Sửa</a></td>
+                            <td><a class="btn btn-sm btn-danger"
+                                    href="{{ route('student.hide', $student->idStudent) }}">Ẩn</a></td>
+                        </tr>
+                    @endforeach
+                </table>
+                {{ $listStudent->appends(['search' => $search])->links() }}
+            </div>
+        </div>
+    </div>
+@endsection

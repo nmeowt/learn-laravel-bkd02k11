@@ -2,13 +2,105 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grade;
+use App\Models\Student;
+use Illuminate\Http\Request;
+
 class StudentController extends Controller
 {
-    public function getName($name)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        // return view('student.index', compact('name'));
+        $search = $request->get('search');
+        $idGrade = $request->get('id-grade');
+        $listGrade = Grade::all();
+        // select * from student join grade on student.idGrade = grade.idGrade 
+        $listStudent = Student::join("grade", "student.idGrade", "=", "grade.idGrade")
+            ->where("student.idGrade", $idGrade)
+            ->where("student.availabel", 1)
+            ->where("firstName", "like", "%$search%")
+            ->paginate(5);
+
         return view('student.index', [
-            "abc" => $name
+            "listStudent" => $listStudent,
+            "search" => $search,
+            "listGrade" => $listGrade,
+            "idGrade" => $idGrade,
         ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function hide($id)
+    {
+        echo $id;
     }
 }

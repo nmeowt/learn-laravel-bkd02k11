@@ -19,6 +19,7 @@ class Student extends Migration
             $table->string('middleName', 50);
             $table->string('lastName', 50);
             $table->boolean('gender');
+            $table->date('birthDate');
             $table->unsignedInteger('idGrade');
             $table->foreign('idGrade')->references('idGrade')->on('grade');
         });

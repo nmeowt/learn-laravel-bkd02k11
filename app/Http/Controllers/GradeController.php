@@ -56,6 +56,7 @@ class GradeController extends Controller
      */
     public function show($id)
     {
+        // Hiển thị danh sách sinh viên theo lớp
         // $grade = Grade::where('idGrade', $id)->first(); 
         $grade = Grade::find($id);
         return $grade;

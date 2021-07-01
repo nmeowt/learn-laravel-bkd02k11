@@ -21,9 +21,11 @@ Route::middleware([CheckLogin::class])->group(function () {
 
     Route::get('/logout', [AuthenticateController::class, 'logout'])->name('logout');
 
-    # Tạo route sinh viên in ra Chào các bạn bằng controller
-    Route::get('/student/{name}', [StudentController::class, 'getName']);
-
-    // Thêm lớp
+    // lớp
     Route::resource("grade", GradeController::class);
+    // sinh viên
+    Route::resource("student", StudentController::class);
+    Route::prefix("student")->name('student.')->group(function () {
+        Route::get('hide/{id}', [StudentController::class, 'hide'])->name('hide');
+    });
 });
