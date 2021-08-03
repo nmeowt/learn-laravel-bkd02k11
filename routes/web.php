@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/login', [AuthenticateController::class, 'login'])->name('login');
 Route::post('/login-process', [AuthenticateController::class, 'loginProcess'])->name('login-process');
 
-
+// test git
 Route::middleware([CheckLogin::class])->group(function () {
     Route::get('/', function () {
         return view('dashboard');
